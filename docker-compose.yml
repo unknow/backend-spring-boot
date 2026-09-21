@@ -7,3 +7,17 @@ services:
       POSTGRES_PASSWORD: curso
     ports:
       - "5432:5432"
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:26.0
+    command: start-dev
+    environment:
+      KC_BOOTSTRAP_ADMIN_USERNAME: admin
+      KC_BOOTSTRAP_ADMIN_PASSWORD: admin
+    ports:
+      - "8081:8080"
+    # Para importar o realm pronto em vez de configurar na mão:
+    #   descomente as duas linhas abaixo e troque o command por:
+    #   command: start-dev --import-realm
+    # volumes:
+    #   - ./keycloak/curso-realm.json:/opt/keycloak/data/import/curso-realm.json
