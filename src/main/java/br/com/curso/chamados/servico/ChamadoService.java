@@ -6,22 +6,22 @@ import br.com.curso.chamados.dto.ChamadoResposta;
 import br.com.curso.chamados.dto.NovoChamado;
 import br.com.curso.chamados.excecao.ChamadoJaFechado;
 import br.com.curso.chamados.excecao.ChamadoNaoEncontrado;
-import br.com.curso.chamados.repositorio.ChamadoRepositorioMemoria;
+import br.com.curso.chamados.repositorio.ChamadoRepository;
 import java.util.List;
 import org.springframework.stereotype.Service;
 
 @Service
 public class ChamadoService {
 
-    private final ChamadoRepositorioMemoria repositorio;
+    private final ChamadoRepository repositorio; // era o Map, agora é o Spring Data
 
-    public ChamadoService(ChamadoRepositorioMemoria repositorio) {
+    public ChamadoService(ChamadoRepository repositorio) {
         this.repositorio = repositorio;
     }
 
     public ChamadoResposta criar(NovoChamado dto) {
         var chamado = new Chamado(dto.titulo(), dto.descricao(), StatusChamado.ABERTO);
-        var salvo = repositorio.salvar(chamado);
+        var salvo = repositorio.save(chamado);
         return paraResposta(salvo);
     }
 
@@ -30,7 +30,7 @@ public class ChamadoService {
     }
 
     public List<ChamadoResposta> listar(StatusChamado status) {
-        return repositorio.listar().stream()
+        return repositorio.findAll().stream()
                 .filter(c -> status == null || c.getStatus() == status)
                 .map(this::paraResposta)
                 .toList();
@@ -40,7 +40,7 @@ public class ChamadoService {
         var chamado = buscarChamado(id);
         chamado.setTitulo(dto.titulo());
         chamado.setDescricao(dto.descricao());
-        return paraResposta(repositorio.salvar(chamado));
+        return paraResposta(repositorio.save(chamado));
     }
 
     public ChamadoResposta fechar(Long id) {
@@ -49,16 +49,16 @@ public class ChamadoService {
             throw new ChamadoJaFechado(id);
         }
         chamado.setStatus(StatusChamado.FECHADO);
-        return paraResposta(repositorio.salvar(chamado));
+        return paraResposta(repositorio.save(chamado));
     }
 
     public void excluir(Long id) {
         buscarChamado(id); // garante 404 para id inexistente
-        repositorio.excluir(id);
+        repositorio.deleteById(id);
     }
 
     private Chamado buscarChamado(Long id) {
-        return repositorio.buscarPorId(id)
+        return repositorio.findById(id)
                 .orElseThrow(() -> new ChamadoNaoEncontrado(id));
     }
 
