@@ -7,6 +7,7 @@ import br.com.curso.chamados.dto.ChamadoResposta;
 import br.com.curso.chamados.dto.NovoChamado;
 import br.com.curso.chamados.excecao.ChamadoJaFechado;
 import br.com.curso.chamados.excecao.ChamadoNaoEncontrado;
+import br.com.curso.chamados.integracao.ViaCepClient;
 import br.com.curso.chamados.repositorio.ChamadoRepository;
 import br.com.curso.chamados.repositorio.ComentarioRepository;
 import java.time.LocalDateTime;
@@ -21,17 +22,25 @@ public class ChamadoService {
 
     private final ChamadoRepository repositorio;
     private final ComentarioRepository comentarios;
+    private final ViaCepClient enderecos;
 
-    public ChamadoService(ChamadoRepository repositorio, ComentarioRepository comentarios) {
+    public ChamadoService(ChamadoRepository repositorio, ComentarioRepository comentarios,
+            ViaCepClient enderecos) {
         this.repositorio = repositorio;
         this.comentarios = comentarios;
+        this.enderecos = enderecos;
     }
 
+    @Transactional
     public ChamadoResposta criar(NovoChamado dto) {
         var chamado = new Chamado(dto.titulo(), dto.descricao(), StatusChamado.ABERTO);
         chamado.setCriadoEm(LocalDateTime.now());
-        var salvo = repositorio.save(chamado);
-        return paraResposta(salvo);
+
+        if (dto.cep() != null && !dto.cep().isBlank()) {
+            chamado.definirEndereco(enderecos.buscarPorCep(dto.cep())); // a fronteira
+        }
+
+        return paraResposta(repositorio.save(chamado));
     }
 
     public ChamadoResposta buscar(Long id) {

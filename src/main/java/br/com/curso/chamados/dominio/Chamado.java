@@ -25,6 +25,12 @@ public class Chamado {
     @Enumerated(EnumType.STRING)
     private Prioridade prioridade = Prioridade.MEDIA;
 
+    private String cep;
+    private String rua;
+    private String bairro;
+    private String cidade;
+    private String uf;
+
     private java.time.LocalDateTime criadoEm;
 
     protected Chamado() {
@@ -63,6 +69,18 @@ public class Chamado {
 
     public void setStatus(StatusChamado status) {
         this.status = status;
+    }
+
+    public void definirEndereco(Endereco endereco) {
+        this.cep = endereco.cep();
+        this.rua = endereco.rua();
+        this.bairro = endereco.bairro();
+        this.cidade = endereco.cidade();
+        this.uf = endereco.uf();
+    }
+
+    public Endereco getEndereco() {
+        return cep == null ? null : new Endereco(cep, rua, bairro, cidade, uf);
     }
 
     public Prioridade getPrioridade() {

@@ -10,5 +10,7 @@ public record NovoChamado(
 
         @NotBlank(message = "descrição é obrigatória")
         @Size(min = 10, message = "descrição deve ter ao menos 10 caracteres")
-        String descricao
+        String descricao,
+
+        String cep // opcional: quando informado, o endereço vem do serviço externo
 ) {}

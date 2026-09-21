@@ -1,0 +1,6 @@
+# Plano B para rede corporativa com bloqueio de saída:
+# rode com --spring.profiles.active=local-integracao e aponte a integração
+# para um serviço de mentira rodando na sua máquina (ver docs/modulo-7-plano-b.md).
+integracao:
+  viacep:
+    base-url: http://localhost:9090
