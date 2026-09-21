@@ -6,7 +6,8 @@ import br.com.curso.chamados.dto.NovoComentario;
 import br.com.curso.chamados.excecao.ChamadoNaoEncontrado;
 import br.com.curso.chamados.repositorio.ChamadoRepository;
 import br.com.curso.chamados.repositorio.ComentarioRepository;
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -27,13 +28,12 @@ public class ComentarioService {
         return paraResposta(salvo);
     }
 
-    public List<ComentarioResposta> listar(Long chamadoId) {
+    public Page<ComentarioResposta> listar(Long chamadoId, Pageable pageable) {
         if (!chamados.existsById(chamadoId)) {
             throw new ChamadoNaoEncontrado(chamadoId);
         }
-        return comentarios.findByChamadoId(chamadoId).stream()
-                .map(this::paraResposta)
-                .toList();
+        return comentarios.findByChamadoId(chamadoId, pageable)
+                .map(this::paraResposta);
     }
 
     private ComentarioResposta paraResposta(Comentario comentario) {

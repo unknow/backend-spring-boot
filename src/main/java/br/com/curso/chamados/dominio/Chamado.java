@@ -22,6 +22,9 @@ public class Chamado {
     @Enumerated(EnumType.STRING) // grava "ABERTO", não 0
     private StatusChamado status;
 
+    @Enumerated(EnumType.STRING)
+    private Prioridade prioridade = Prioridade.MEDIA;
+
     private java.time.LocalDateTime criadoEm;
 
     protected Chamado() {
@@ -60,6 +63,14 @@ public class Chamado {
 
     public void setStatus(StatusChamado status) {
         this.status = status;
+    }
+
+    public Prioridade getPrioridade() {
+        return prioridade;
+    }
+
+    public void setPrioridade(Prioridade prioridade) {
+        this.prioridade = prioridade;
     }
 
     public java.time.LocalDateTime getCriadoEm() {

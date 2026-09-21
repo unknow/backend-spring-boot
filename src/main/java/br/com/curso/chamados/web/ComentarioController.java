@@ -5,7 +5,8 @@ import br.com.curso.chamados.dto.NovoComentario;
 import br.com.curso.chamados.servico.ComentarioService;
 import jakarta.validation.Valid;
 import java.net.URI;
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -33,7 +34,7 @@ public class ComentarioController {
     }
 
     @GetMapping
-    public List<ComentarioResposta> listar(@PathVariable Long chamadoId) {
-        return service.listar(chamadoId);
+    public Page<ComentarioResposta> listar(@PathVariable Long chamadoId, Pageable pageable) {
+        return service.listar(chamadoId, pageable);
     }
 }

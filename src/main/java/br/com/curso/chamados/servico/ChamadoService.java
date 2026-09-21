@@ -81,6 +81,6 @@ public class ChamadoService {
 
     private ChamadoResposta paraResposta(Chamado chamado) {
         return new ChamadoResposta(chamado.getId(), chamado.getTitulo(),
-                chamado.getStatus(), chamado.getCriadoEm());
+                chamado.getStatus(), chamado.getPrioridade(), chamado.getCriadoEm());
     }
 }
