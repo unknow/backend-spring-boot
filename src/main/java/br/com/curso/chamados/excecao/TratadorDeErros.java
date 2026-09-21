@@ -15,6 +15,11 @@ public class TratadorDeErros {
         return ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND, ex.getMessage());
     }
 
+    @ExceptionHandler(ChamadoJaFechado.class)
+    ProblemDetail jaFechado(ChamadoJaFechado ex) {
+        return ProblemDetail.forStatusAndDetail(HttpStatus.CONFLICT, ex.getMessage()); // 409
+    }
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     ProblemDetail invalido(MethodArgumentNotValidException ex) {
         var problema = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, "Há campos inválidos");

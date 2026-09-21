@@ -9,5 +9,6 @@ public record NovoChamado(
         String titulo,
 
         @NotBlank(message = "descrição é obrigatória")
+        @Size(min = 10, message = "descrição deve ter ao menos 10 caracteres")
         String descricao
 ) {}

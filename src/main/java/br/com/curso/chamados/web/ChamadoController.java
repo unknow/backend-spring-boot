@@ -10,6 +10,7 @@ import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -48,6 +49,11 @@ public class ChamadoController {
     @PutMapping("/{id}")
     public ChamadoResposta atualizar(@PathVariable Long id, @Valid @RequestBody NovoChamado corpo) {
         return service.atualizar(id, corpo);
+    }
+
+    @PatchMapping("/{id}/fechar")
+    public ChamadoResposta fechar(@PathVariable Long id) {
+        return service.fechar(id);
     }
 
     @DeleteMapping("/{id}")

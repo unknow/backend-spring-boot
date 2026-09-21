@@ -4,6 +4,7 @@ import br.com.curso.chamados.dominio.Chamado;
 import br.com.curso.chamados.dominio.StatusChamado;
 import br.com.curso.chamados.dto.ChamadoResposta;
 import br.com.curso.chamados.dto.NovoChamado;
+import br.com.curso.chamados.excecao.ChamadoJaFechado;
 import br.com.curso.chamados.excecao.ChamadoNaoEncontrado;
 import br.com.curso.chamados.repositorio.ChamadoRepositorioMemoria;
 import java.util.List;
@@ -39,6 +40,15 @@ public class ChamadoService {
         var chamado = buscarChamado(id);
         chamado.setTitulo(dto.titulo());
         chamado.setDescricao(dto.descricao());
+        return paraResposta(repositorio.salvar(chamado));
+    }
+
+    public ChamadoResposta fechar(Long id) {
+        var chamado = buscarChamado(id);
+        if (chamado.getStatus() == StatusChamado.FECHADO) {
+            throw new ChamadoJaFechado(id);
+        }
+        chamado.setStatus(StatusChamado.FECHADO);
         return paraResposta(repositorio.salvar(chamado));
     }
 
