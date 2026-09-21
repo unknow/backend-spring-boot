@@ -1,0 +1,19 @@
+# Perfil de produção: comportamento, não segredos.
+# Os segredos continuam vindo de variáveis de ambiente.
+spring:
+  jpa:
+    show-sql: false
+
+logging:
+  level:
+    root: INFO
+    br.com.curso.chamados: INFO
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics   # nunca "*": /env e /beans vazam configuração
+  endpoint:
+    health:
+      show-details: when-authorized
