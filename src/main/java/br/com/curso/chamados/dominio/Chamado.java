@@ -1,11 +1,30 @@
 package br.com.curso.chamados.dominio;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "chamados")
 public class Chamado {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String titulo;
     private String descricao;
+
+    @Enumerated(EnumType.STRING) // grava "ABERTO", não 0
     private StatusChamado status;
+
+    protected Chamado() {
+        // exigido pelo JPA
+    }
 
     public Chamado(String titulo, String descricao, StatusChamado status) {
         this.titulo = titulo;
@@ -15,10 +34,6 @@ public class Chamado {
 
     public Long getId() {
         return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getTitulo() {
