@@ -9,6 +9,7 @@ import br.com.curso.chamados.excecao.CepNaoEncontrado;
 import br.com.curso.chamados.excecao.ChamadoJaFechado;
 import br.com.curso.chamados.excecao.ChamadoNaoEncontrado;
 import br.com.curso.chamados.integracao.ViaCepClient;
+import br.com.curso.chamados.notificacao.Notificador;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import br.com.curso.chamados.repositorio.ChamadoRepository;
@@ -29,12 +30,14 @@ public class ChamadoService {
     private final ChamadoRepository repositorio;
     private final ComentarioRepository comentarios;
     private final ViaCepClient enderecos;
+    private final List<Notificador> notificadores; // todas as implementações
 
     public ChamadoService(ChamadoRepository repositorio, ComentarioRepository comentarios,
-            ViaCepClient enderecos) {
+            ViaCepClient enderecos, List<Notificador> notificadores) {
         this.repositorio = repositorio;
         this.comentarios = comentarios;
         this.enderecos = enderecos;
+        this.notificadores = notificadores;
     }
 
     @Transactional
@@ -90,6 +93,10 @@ public class ChamadoService {
         }
         chamado.setStatus(StatusChamado.FECHADO); // dirty checking persiste no commit
         comentarios.save(new Comentario("Chamado encerrado", chamado));
+
+        // Canal novo? Basta existir como @Component: esta classe não muda.
+        notificadores.forEach(n -> n.chamadoFechado(chamado));
+
         return paraResposta(chamado);
     }
 
