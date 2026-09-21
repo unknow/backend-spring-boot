@@ -1,0 +1,6 @@
+server:
+  port: 8080
+
+curso:
+  nome-app: Sistema de Chamados
+  mensagem: Ambiente padrão
