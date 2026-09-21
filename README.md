@@ -41,6 +41,9 @@ sistema; as branches marcam o estado do código ao fim de cada bloco de aula.
 | `m8-etapa-2` | M8 · Bloco 2 — configuração por variáveis e perfil prod |
 | `m8-etapa-3` | M8 · Bloco 3 — Dockerfile multi-stage e Actuator |
 | `m8-etapa-4` | M8 · Exercício — stack completa no compose |
+| `m9-etapa-0` | Ponto de partida do módulo 9 (a trilha inteira construída) |
+| `m9-etapa-1` | M9 · Bloco 3 — if/else de prazo refatorado para Strategy |
+| `m9-etapa-2` | M9 · Exercício — Notificador com lista injetada |
 
 > As branches do módulo 6 (qualidade e testes) entram depois; o módulo 7 parte
 > direto da `m5-etapa-4`.
