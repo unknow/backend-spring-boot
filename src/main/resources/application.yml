@@ -12,5 +12,5 @@ spring:
     password: curso
   jpa:
     hibernate:
-      ddl-auto: update   # apenas para aprendizado — produção usa Flyway (módulo 4)
+      ddl-auto: validate   # o Hibernate confere; quem cria e evolui é o Flyway
     show-sql: true
