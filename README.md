@@ -26,6 +26,11 @@ sistema; as branches marcam o estado do código ao fim de cada bloco de aula.
 | `m4-etapa-2` | M4 · Bloco 2 — paginação e ordenação com Pageable |
 | `m4-etapa-3` | M4 · Bloco 3 — Flyway (V1, V2, validate) e @Transactional |
 | `m4-etapa-4` | M4 · Exercício — migração V3 (prioridade) e comentários paginados |
+| `m5-etapa-0` | Ponto de partida do módulo 5 (= módulo 4 completo) |
+| `m5-etapa-1` | M5 · Bloco 2 — Keycloak no docker-compose e roteiro de tokens |
+| `m5-etapa-2` | M5 · Bloco 3 — Resource Server e SecurityFilterChain |
+| `m5-etapa-3` | M5 · Bloco 3 — converter de roles (o 403 misterioso) |
+| `m5-etapa-4` | M5 · Exercício — role GERENTE no PATCH /fechar |
 
 ## Como rodar
 
