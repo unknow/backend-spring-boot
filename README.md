@@ -31,6 +31,11 @@ sistema; as branches marcam o estado do código ao fim de cada bloco de aula.
 | `m5-etapa-2` | M5 · Bloco 3 — Resource Server e SecurityFilterChain |
 | `m5-etapa-3` | M5 · Bloco 3 — converter de roles (o 403 misterioso) |
 | `m5-etapa-4` | M5 · Exercício — role GERENTE no PATCH /fechar |
+| `m6-etapa-0` | Ponto de partida do módulo 6 (= módulo 5 completo) |
+| `m6-etapa-1` | M6 · Bloco 1 — testes de unidade com Mockito e AssertJ |
+| `m6-etapa-2` | M6 · Bloco 2 — MockMvc, Testcontainers e teste de fluxo |
+| `m6-etapa-3` | M6 · Bloco 3 — autorização automatizada e JaCoCo |
+| `m6-etapa-4` | M6 · Exercício — teste dos comentários |
 | `m7-etapa-0` | Ponto de partida do módulo 7 (módulos 1-5 completos) |
 | `m7-etapa-1` | M7 · Bloco 1 — OpenAPI documentado e cadeado JWT no Swagger |
 | `m7-etapa-2` | M7 · Bloco 2 — RestClient, fronteira com o ViaCEP e endereço |
@@ -45,8 +50,9 @@ sistema; as branches marcam o estado do código ao fim de cada bloco de aula.
 | `m9-etapa-1` | M9 · Bloco 3 — if/else de prazo refatorado para Strategy |
 | `m9-etapa-2` | M9 · Exercício — Notificador com lista injetada |
 
-> As branches do módulo 6 (qualidade e testes) entram depois; o módulo 7 parte
-> direto da `m5-etapa-4`.
+> Os módulos 6 e 7 partem ambos da `m5-etapa-4`: o 6 acrescenta a suíte de
+> testes e o 7 segue pela integração. Para uma linha única, aplique os testes
+> do 6 sobre a `m7-etapa-0` antes de começar o módulo 7 em sala.
 
 ## Como rodar
 
