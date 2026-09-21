@@ -15,6 +15,11 @@ public class TratadorDeErros {
         return ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND, ex.getMessage());
     }
 
+    @ExceptionHandler(CepNaoEncontrado.class)
+    ProblemDetail cepInvalido(CepNaoEncontrado ex) {
+        return ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, ex.getMessage());
+    }
+
     @ExceptionHandler(ChamadoJaFechado.class)
     ProblemDetail jaFechado(ChamadoJaFechado ex) {
         return ProblemDetail.forStatusAndDetail(HttpStatus.CONFLICT, ex.getMessage()); // 409

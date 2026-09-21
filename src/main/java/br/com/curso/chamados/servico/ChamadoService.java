@@ -5,9 +5,12 @@ import br.com.curso.chamados.dominio.Comentario;
 import br.com.curso.chamados.dominio.StatusChamado;
 import br.com.curso.chamados.dto.ChamadoResposta;
 import br.com.curso.chamados.dto.NovoChamado;
+import br.com.curso.chamados.excecao.CepNaoEncontrado;
 import br.com.curso.chamados.excecao.ChamadoJaFechado;
 import br.com.curso.chamados.excecao.ChamadoNaoEncontrado;
 import br.com.curso.chamados.integracao.ViaCepClient;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import br.com.curso.chamados.repositorio.ChamadoRepository;
 import br.com.curso.chamados.repositorio.ComentarioRepository;
 import java.time.LocalDateTime;
@@ -16,9 +19,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.RestClientException;
 
 @Service
 public class ChamadoService {
+
+    private static final Logger log = LoggerFactory.getLogger(ChamadoService.class);
 
     private final ChamadoRepository repositorio;
     private final ComentarioRepository comentarios;
@@ -37,7 +43,16 @@ public class ChamadoService {
         chamado.setCriadoEm(LocalDateTime.now());
 
         if (dto.cep() != null && !dto.cep().isBlank()) {
-            chamado.definirEndereco(enderecos.buscarPorCep(dto.cep())); // a fronteira
+            try {
+                chamado.definirEndereco(enderecos.buscarPorCep(dto.cep()));
+            } catch (CepNaoEncontrado e) {
+                throw e; // erro do usuário: vira 400 no advice
+            } catch (RestClientException e) {
+                // Serviço fora do ar ou lento: endereço é conveniência, não requisito.
+                // Decisão de negócio: o chamado abre mesmo assim (degradação).
+                log.warn("ViaCEP indisponível cep={} - chamado segue sem endereço",
+                        dto.cep(), e);
+            }
         }
 
         return paraResposta(repositorio.save(chamado));
