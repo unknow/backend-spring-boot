@@ -3,21 +3,43 @@ services:
     image: postgres:17
     environment:
       POSTGRES_DB: chamados
-      POSTGRES_USER: curso
-      POSTGRES_PASSWORD: curso
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
     ports:
       - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER} -d chamados"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
 
   keycloak:
     image: quay.io/keycloak/keycloak:26.0
     command: start-dev
     environment:
-      KC_BOOTSTRAP_ADMIN_USERNAME: admin
-      KC_BOOTSTRAP_ADMIN_PASSWORD: admin
+      KC_BOOTSTRAP_ADMIN_USERNAME: ${KEYCLOAK_ADMIN}
+      KC_BOOTSTRAP_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD}
     ports:
       - "8081:8080"
-    # Para importar o realm pronto em vez de configurar na mão:
-    #   descomente as duas linhas abaixo e troque o command por:
-    #   command: start-dev --import-realm
-    # volumes:
-    #   - ./keycloak/curso-realm.json:/opt/keycloak/data/import/curso-realm.json
+
+  api:
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      # Dentro da rede do compose, o host é o NOME DO SERVIÇO — nunca localhost.
+      DB_URL: jdbc:postgresql://postgres:5432/chamados
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      KEYCLOAK_ISSUER_URI: http://keycloak:8080/realms/curso-realm
+      SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE:-prod}
+    depends_on:
+      postgres:
+        condition: service_healthy   # a API espera o banco estar pronto
+      keycloak:
+        condition: service_started
+
+volumes:
+  postgres-data:
