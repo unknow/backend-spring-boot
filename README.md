@@ -1,5 +1,7 @@
 # Trilha Backend Spring Boot — Sistema de Chamados
 
+Repositório: https://github.com/unknow/backend-spring-boot
+
 Projeto fio-condutor da trilha de formação backend. Cada módulo evolui o mesmo
 sistema; as branches marcam o estado do código ao fim de cada bloco de aula.
 
@@ -53,6 +55,11 @@ sistema; as branches marcam o estado do código ao fim de cada bloco de aula.
 > Os módulos 6 e 7 partem ambos da `m5-etapa-4`: o 6 acrescenta a suíte de
 > testes e o 7 segue pela integração. Para uma linha única, aplique os testes
 > do 6 sobre a `m7-etapa-0` antes de começar o módulo 7 em sala.
+
+## Materiais de apoio
+
+Cada módulo tem um deck de aula e um plano de apresentação com as notas do
+instrutor. Os links são compartilhados pelo instrutor a cada encontro.
 
 ## Como rodar
 
