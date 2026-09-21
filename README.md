@@ -21,6 +21,11 @@ sistema; as branches marcam o estado do código ao fim de cada bloco de aula.
 | `m3-etapa-2` | M3 · Bloco 2 — Postgres no Docker e datasource |
 | `m3-etapa-3` | M3 · Bloco 3 — Spring Data e a grande troca |
 | `m3-etapa-4` | M3 · Exercício — criadoEm, findByStatus e busca |
+| `m4-etapa-0` | Ponto de partida do módulo 4 (= módulo 3 completo) |
+| `m4-etapa-1` | M4 · Bloco 1 — Comentario @ManyToOne e endpoints aninhados |
+| `m4-etapa-2` | M4 · Bloco 2 — paginação e ordenação com Pageable |
+| `m4-etapa-3` | M4 · Bloco 3 — Flyway (V1, V2, validate) e @Transactional |
+| `m4-etapa-4` | M4 · Exercício — migração V3 (prioridade) e comentários paginados |
 
 ## Como rodar
 
