@@ -4,3 +4,13 @@ server:
 curso:
   nome-app: Sistema de Chamados
   mensagem: Ambiente padrão
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/chamados
+    username: curso
+    password: curso
+  jpa:
+    hibernate:
+      ddl-auto: update   # apenas para aprendizado — produção usa Flyway (módulo 4)
+    show-sql: true
