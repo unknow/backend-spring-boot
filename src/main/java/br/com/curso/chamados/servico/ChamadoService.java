@@ -4,6 +4,7 @@ import br.com.curso.chamados.dominio.Chamado;
 import br.com.curso.chamados.dominio.StatusChamado;
 import br.com.curso.chamados.dto.ChamadoResposta;
 import br.com.curso.chamados.dto.NovoChamado;
+import br.com.curso.chamados.excecao.ChamadoNaoEncontrado;
 import br.com.curso.chamados.repositorio.ChamadoRepositorioMemoria;
 import java.util.List;
 import org.springframework.stereotype.Service;
@@ -24,15 +25,18 @@ public class ChamadoService {
     }
 
     public ChamadoResposta buscar(Long id) {
-        return repositorio.buscarPorId(id)
-                .map(this::paraResposta)
-                .orElseThrow(); // por enquanto estoura 500 — o Bloco 3 conserta
+        return paraResposta(buscarChamado(id));
     }
 
     public List<ChamadoResposta> listar() {
         return repositorio.listar().stream()
                 .map(this::paraResposta)
                 .toList();
+    }
+
+    private Chamado buscarChamado(Long id) {
+        return repositorio.buscarPorId(id)
+                .orElseThrow(() -> new ChamadoNaoEncontrado(id));
     }
 
     private ChamadoResposta paraResposta(Chamado chamado) {

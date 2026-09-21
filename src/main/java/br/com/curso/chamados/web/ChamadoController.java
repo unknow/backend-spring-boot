@@ -3,6 +3,7 @@ package br.com.curso.chamados.web;
 import br.com.curso.chamados.dto.ChamadoResposta;
 import br.com.curso.chamados.dto.NovoChamado;
 import br.com.curso.chamados.servico.ChamadoService;
+import jakarta.validation.Valid;
 import java.net.URI;
 import java.util.List;
 import org.springframework.http.ResponseEntity;
@@ -34,7 +35,7 @@ public class ChamadoController {
     }
 
     @PostMapping
-    public ResponseEntity<ChamadoResposta> criar(@RequestBody NovoChamado corpo) {
+    public ResponseEntity<ChamadoResposta> criar(@Valid @RequestBody NovoChamado corpo) {
         var criado = service.criar(corpo);
         var location = URI.create("/chamados/" + criado.id());
         return ResponseEntity.created(location).body(criado); // 201 + header Location
