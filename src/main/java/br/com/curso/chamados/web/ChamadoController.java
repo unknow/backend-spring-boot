@@ -4,6 +4,9 @@ import br.com.curso.chamados.dominio.StatusChamado;
 import br.com.curso.chamados.dto.ChamadoResposta;
 import br.com.curso.chamados.dto.NovoChamado;
 import br.com.curso.chamados.servico.ChamadoService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import java.net.URI;
 import java.util.List;
@@ -21,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+@Tag(name = "Chamados", description = "Abertura e acompanhamento de chamados")
 @RestController
 @RequestMapping("/chamados")
 public class ChamadoController {
@@ -47,6 +51,9 @@ public class ChamadoController {
         return service.buscar(id);
     }
 
+    @Operation(summary = "Abre um novo chamado")
+    @ApiResponse(responseCode = "201", description = "Chamado aberto")
+    @ApiResponse(responseCode = "400", description = "Dados inválidos")
     @PostMapping
     public ResponseEntity<ChamadoResposta> criar(@Valid @RequestBody NovoChamado corpo) {
         var criado = service.criar(corpo);
@@ -59,6 +66,10 @@ public class ChamadoController {
         return service.atualizar(id, corpo);
     }
 
+    @Operation(summary = "Fecha um chamado aberto")
+    @ApiResponse(responseCode = "200", description = "Chamado fechado")
+    @ApiResponse(responseCode = "404", description = "Chamado não encontrado")
+    @ApiResponse(responseCode = "409", description = "O chamado já estava fechado")
     @PatchMapping("/{id}/fechar")
     public ChamadoResposta fechar(@PathVariable Long id) {
         return service.fechar(id);
