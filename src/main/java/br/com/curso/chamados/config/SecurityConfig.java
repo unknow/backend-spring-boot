@@ -24,7 +24,8 @@ public class SecurityConfig {
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/swagger-ui/**", "/swagger-ui.html", "/v3/api-docs/**", "/health").permitAll()
+                        .requestMatchers("/swagger-ui/**", "/swagger-ui.html", "/v3/api-docs/**",
+                                "/health", "/actuator/health/**").permitAll()
                         .requestMatchers(HttpMethod.DELETE, "/chamados/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.PATCH, "/chamados/*/fechar").hasRole("GERENTE")
                         .anyRequest().authenticated())

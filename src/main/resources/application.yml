@@ -26,3 +26,15 @@ spring:
 integracao:
   viacep:
     base-url: ${VIACEP_BASE_URL:https://viacep.com.br}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: always   # em produção: when-authorized
+  info:
+    env:
+      enabled: true
