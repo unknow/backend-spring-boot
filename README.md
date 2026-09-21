@@ -31,6 +31,14 @@ sistema; as branches marcam o estado do código ao fim de cada bloco de aula.
 | `m5-etapa-2` | M5 · Bloco 3 — Resource Server e SecurityFilterChain |
 | `m5-etapa-3` | M5 · Bloco 3 — converter de roles (o 403 misterioso) |
 | `m5-etapa-4` | M5 · Exercício — role GERENTE no PATCH /fechar |
+| `m7-etapa-0` | Ponto de partida do módulo 7 (módulos 1-5 completos) |
+| `m7-etapa-1` | M7 · Bloco 1 — OpenAPI documentado e cadeado JWT no Swagger |
+| `m7-etapa-2` | M7 · Bloco 2 — RestClient, fronteira com o ViaCEP e endereço |
+| `m7-etapa-3` | M7 · Bloco 3 — timeouts, fallback com WARN e 400 de CEP |
+| `m7-etapa-4` | M7 · Exercício — GET /ceps/{cep} documentado |
+
+> As branches do módulo 6 (qualidade e testes) entram depois; o módulo 7 parte
+> direto da `m5-etapa-4`.
 
 ## Como rodar
 
