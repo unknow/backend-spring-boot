@@ -22,6 +22,8 @@ public class Chamado {
     @Enumerated(EnumType.STRING) // grava "ABERTO", não 0
     private StatusChamado status;
 
+    private java.time.LocalDateTime criadoEm;
+
     protected Chamado() {
         // exigido pelo JPA
     }
@@ -58,5 +60,13 @@ public class Chamado {
 
     public void setStatus(StatusChamado status) {
         this.status = status;
+    }
+
+    public java.time.LocalDateTime getCriadoEm() {
+        return criadoEm;
+    }
+
+    public void setCriadoEm(java.time.LocalDateTime criadoEm) {
+        this.criadoEm = criadoEm;
     }
 }

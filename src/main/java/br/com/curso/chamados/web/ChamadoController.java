@@ -34,6 +34,11 @@ public class ChamadoController {
         return service.listar(status);
     }
 
+    @GetMapping("/busca")
+    public List<ChamadoResposta> buscarPorTitulo(@RequestParam String q) {
+        return service.buscarPorTitulo(q);
+    }
+
     @GetMapping("/{id}")
     public ChamadoResposta buscar(@PathVariable Long id) {
         return service.buscar(id);

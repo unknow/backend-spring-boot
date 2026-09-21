@@ -7,13 +7,14 @@ import br.com.curso.chamados.dto.NovoChamado;
 import br.com.curso.chamados.excecao.ChamadoJaFechado;
 import br.com.curso.chamados.excecao.ChamadoNaoEncontrado;
 import br.com.curso.chamados.repositorio.ChamadoRepository;
+import java.time.LocalDateTime;
 import java.util.List;
 import org.springframework.stereotype.Service;
 
 @Service
 public class ChamadoService {
 
-    private final ChamadoRepository repositorio; // era o Map, agora é o Spring Data
+    private final ChamadoRepository repositorio;
 
     public ChamadoService(ChamadoRepository repositorio) {
         this.repositorio = repositorio;
@@ -21,6 +22,7 @@ public class ChamadoService {
 
     public ChamadoResposta criar(NovoChamado dto) {
         var chamado = new Chamado(dto.titulo(), dto.descricao(), StatusChamado.ABERTO);
+        chamado.setCriadoEm(LocalDateTime.now());
         var salvo = repositorio.save(chamado);
         return paraResposta(salvo);
     }
@@ -30,8 +32,16 @@ public class ChamadoService {
     }
 
     public List<ChamadoResposta> listar(StatusChamado status) {
-        return repositorio.findAll().stream()
-                .filter(c -> status == null || c.getStatus() == status)
+        var chamados = (status == null)
+                ? repositorio.findAll()
+                : repositorio.findByStatus(status); // where status = ? no banco
+        return chamados.stream()
+                .map(this::paraResposta)
+                .toList();
+    }
+
+    public List<ChamadoResposta> buscarPorTitulo(String trecho) {
+        return repositorio.findByTituloContainingIgnoreCase(trecho).stream()
                 .map(this::paraResposta)
                 .toList();
     }
@@ -63,6 +73,7 @@ public class ChamadoService {
     }
 
     private ChamadoResposta paraResposta(Chamado chamado) {
-        return new ChamadoResposta(chamado.getId(), chamado.getTitulo(), chamado.getStatus());
+        return new ChamadoResposta(chamado.getId(), chamado.getTitulo(),
+                chamado.getStatus(), chamado.getCriadoEm());
     }
 }

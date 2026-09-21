@@ -9,4 +9,6 @@ public interface ChamadoRepository extends JpaRepository<Chamado, Long> {
 
     // o nome do método vira SQL: select ... where status = ?
     List<Chamado> findByStatus(StatusChamado status);
+
+    List<Chamado> findByTituloContainingIgnoreCase(String trecho);
 }
