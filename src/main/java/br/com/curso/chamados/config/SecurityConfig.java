@@ -26,6 +26,7 @@ public class SecurityConfig {
         http.authorizeHttpRequests(auth -> auth
                         .requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/health").permitAll()
                         .requestMatchers(HttpMethod.DELETE, "/chamados/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PATCH, "/chamados/*/fechar").hasRole("GERENTE")
                         .anyRequest().authenticated())
                 .csrf(csrf -> csrf.disable()) // API stateless com token
                 .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
