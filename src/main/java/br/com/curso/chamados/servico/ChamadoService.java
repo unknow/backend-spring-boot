@@ -9,6 +9,8 @@ import br.com.curso.chamados.excecao.ChamadoNaoEncontrado;
 import br.com.curso.chamados.repositorio.ChamadoRepository;
 import java.time.LocalDateTime;
 import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -31,13 +33,11 @@ public class ChamadoService {
         return paraResposta(buscarChamado(id));
     }
 
-    public List<ChamadoResposta> listar(StatusChamado status) {
-        var chamados = (status == null)
-                ? repositorio.findAll()
-                : repositorio.findByStatus(status); // where status = ? no banco
-        return chamados.stream()
-                .map(this::paraResposta)
-                .toList();
+    public Page<ChamadoResposta> listar(StatusChamado status, Pageable pageable) {
+        var pagina = (status == null)
+                ? repositorio.findAll(pageable)
+                : repositorio.findByStatus(status, pageable);
+        return pagina.map(this::paraResposta); // entidade -> DTO mantendo os metadados
     }
 
     public List<ChamadoResposta> buscarPorTitulo(String trecho) {

@@ -7,6 +7,8 @@ import br.com.curso.chamados.servico.ChamadoService;
 import jakarta.validation.Valid;
 import java.net.URI;
 import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,8 +32,9 @@ public class ChamadoController {
     }
 
     @GetMapping
-    public List<ChamadoResposta> listar(@RequestParam(required = false) StatusChamado status) {
-        return service.listar(status);
+    public Page<ChamadoResposta> listar(@RequestParam(required = false) StatusChamado status,
+            Pageable pageable) {
+        return service.listar(status, pageable);
     }
 
     @GetMapping("/busca")
