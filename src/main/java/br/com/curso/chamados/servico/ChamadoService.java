@@ -28,10 +28,23 @@ public class ChamadoService {
         return paraResposta(buscarChamado(id));
     }
 
-    public List<ChamadoResposta> listar() {
+    public List<ChamadoResposta> listar(StatusChamado status) {
         return repositorio.listar().stream()
+                .filter(c -> status == null || c.getStatus() == status)
                 .map(this::paraResposta)
                 .toList();
+    }
+
+    public ChamadoResposta atualizar(Long id, NovoChamado dto) {
+        var chamado = buscarChamado(id);
+        chamado.setTitulo(dto.titulo());
+        chamado.setDescricao(dto.descricao());
+        return paraResposta(repositorio.salvar(chamado));
+    }
+
+    public void excluir(Long id) {
+        buscarChamado(id); // garante 404 para id inexistente
+        repositorio.excluir(id);
     }
 
     private Chamado buscarChamado(Long id) {
