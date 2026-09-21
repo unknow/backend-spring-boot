@@ -36,6 +36,11 @@ sistema; as branches marcam o estado do código ao fim de cada bloco de aula.
 | `m7-etapa-2` | M7 · Bloco 2 — RestClient, fronteira com o ViaCEP e endereço |
 | `m7-etapa-3` | M7 · Bloco 3 — timeouts, fallback com WARN e 400 de CEP |
 | `m7-etapa-4` | M7 · Exercício — GET /ceps/{cep} documentado |
+| `m8-etapa-0` | Ponto de partida do módulo 8 (= módulo 7 completo) |
+| `m8-etapa-1` | M8 · Bloco 1 — build-info e guia de operação |
+| `m8-etapa-2` | M8 · Bloco 2 — configuração por variáveis e perfil prod |
+| `m8-etapa-3` | M8 · Bloco 3 — Dockerfile multi-stage e Actuator |
+| `m8-etapa-4` | M8 · Exercício — stack completa no compose |
 
 > As branches do módulo 6 (qualidade e testes) entram depois; o módulo 7 parte
 > direto da `m5-etapa-4`.
